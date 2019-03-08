@@ -3,7 +3,9 @@ startupScript.src = chrome.runtime.getURL('csn/getLink.js');
 document.body.appendChild(startupScript);
 
 //check csn/getLink.js
-document.addEventListener('gotLinkFromCSN', function (links) {
+document.addEventListener('gotLinkFromCSN', function (event) {
+    const links = event.detail;
+    console.log(links);
     chrome.runtime.sendMessage(links)
 });
 

@@ -13,7 +13,7 @@ function getCSNSrcLinkAndSendToContent() {
     if (links['320']) {
         if (links['128']) delete links['128']
     }
-    document.dispatchEvent(new CustomEvent('gotLinkFromCSN', links));
+    document.dispatchEvent(new CustomEvent('gotLinkFromCSN', {detail: links}));
     CSNSrcLink = links;
 }
 
