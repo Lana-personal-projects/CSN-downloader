@@ -1,8 +1,6 @@
-// window.location.href = document.querySelector('#csnplayer video').src;
-
-let script = document.createElement("script");
-document.body.appendChild(script);
-
+function regexFrom(string) {
+    return new RegExp('\\/downloads\\/.+\\/' + string + '\\/', 'g');
+}
 
 function download(player) {
     let optional = 'flac';
@@ -29,7 +27,5 @@ function download(player) {
 
 }
 
-function regexFrom(string) {
-    return new RegExp('\\/downloads\\/.+\\/' + string + '\\/', 'g');
-}
+
 
