@@ -14,8 +14,8 @@
   "content_scripts": [
     {
       "matches": [
-        "http://*/*",
-        "https://*/*"
+        "http://*.chiasenhac.vn/*",
+        "https://*.chiasenhac.vn/*"
       ],
       "run_at": "document_end",
       "js": [
