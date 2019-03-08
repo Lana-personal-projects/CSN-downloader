@@ -28,12 +28,11 @@ function downloadAllCSNSrcLink() {
         '        a.parentNode.removeChild(a);\n' +
         '        setTimeout(function () {\n' +
         '            download_next(i + 1);\n' +
-        '        }, 500);\n' +
+        '        }, 800);\n' +
         '    }\n' +
         '\n' +
         '    download_next(0);\n' +
         '}';
-
     document.body.appendChild(script)
 }
 
