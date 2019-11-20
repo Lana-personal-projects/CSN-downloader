@@ -1,15 +1,8 @@
-let startupScript = document.createElement('script');
-startupScript.src = chrome.runtime.getURL('src/csn/get-link.js');
+//inject script into page
+const startupScript = document.createElement('script');
+startupScript.src = chrome.runtime.getURL('src/csn-embedded/get-link.js');
 document.body.appendChild(startupScript);
 
-//check csn/get-link.js
-document.addEventListener('gotLinkFromCSN', function (event) {
-    const links = event.detail;
-    chrome.runtime.sendMessage(links)
+document.addEventListener('gotLinkFromCSN', (event) => {
+    chrome.runtime.sendMessage(event.detail)
 });
-
-
-//https://stackoverflow.com/questions/10052259/accessing-global-object-from-content-script-in-chrome-extension
-//https://stackoverflow.com/questions/9602022/chrome-extension-retrieving-global-variable-from-webpage/9636008#9636008
-//https://stackoverflow.com/questions/9915311/chrome-extension-code-vs-content-scripts-vs-injected-scripts/9916089#9916089
-//https://stackoverflow.com/questions/9515704/insert-code-into-the-page-context-using-a-content-script/9517879#9517879

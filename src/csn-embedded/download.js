@@ -6,8 +6,8 @@ function downloadAllCSNSrcLink() {
         '\n' +
         'function getFiles() {\n' +
         '    let files = [];\n' +
-        '    for (let key in CSNSrcLink) {\n' +
-        '        files.push(CSNSrcLink[key])\n' +
+        '    for (let key in CSNSrcLinks) {\n' +
+        '        files.push(CSNSrcLinks[key])\n' +
         '    }\n' +
         '    return files;\n' +
         '}\n' +
@@ -20,6 +20,7 @@ function downloadAllCSNSrcLink() {
         '        let a = document.createElement(\'a\');\n' +
         '        a.href = files[i];\n' +
         '        a.target = \'_parent\';\n' +
+        '        a.setAttribute(\'download\', true);' +
         '\n' +
         '        (document.body || document.documentElement).appendChild(a);\n' +
         '        if (a.click) {\n' +
@@ -35,5 +36,3 @@ function downloadAllCSNSrcLink() {
         '}';
     document.body.appendChild(script)
 }
-
-

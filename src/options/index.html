@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta content='width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0'
+          name='viewport'>
+    <meta content='ie=edge' http-equiv='X-UA-Compatible'>
+    <title>Document</title>
+    <style>
+        .d-block {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+<label class='d-block'>Download Quality</label>
+<div class='d-block'><input id='flac' name='quality' type='checkbox'><label for='flac'>lossless</label></div>
+<div class='d-block'><input id='m4a' name='quality' type='checkbox'><label for='m4a'>m4a 500</label></div>
+<div class='d-block'><input id='320' name='quality' type='checkbox'><label for='320'>mp3 320</label></div>
+<div class='d-block'><input id='128' name='quality' type='checkbox'><label for='128'>mp3 128</label></div>
+<hr>
+<label class='d-block'>Download Fallback</label>
+<div class='d-block'>
+    <input id='fallback-flac' name='fallback-quality' type='checkbox'>
+    <label for='fallback-flac'>lossless</label>
+</div>
+<div class='d-block'>
+    <input id='fallback-m4a' name='fallback-quality' type='checkbox'>
+    <label for='fallback-m4a'>m4a 500</label>
+</div>
+<div class='d-block'>
+    <input id='fallback-320' name='fallback-quality' type='checkbox'>
+    <label for='fallback-320'>mp3 320</label>
+</div>
+<div class='d-block'>
+    <input id='fallback-128' name='fallback-quality' type='checkbox'>
+    <label for='fallback-128'>mp3 128</label>
+</div>
+<br>
+<div id="status" style="color: #03A9F4"></div>
+<br>
+<i class="d-block">We will try to download all available items in the Download Quality list.</i>
+<i>If there isn't any items available, we will switch to Download Fallback list.</i>
+<script src='options.js'></script>
+</body>
+</html>

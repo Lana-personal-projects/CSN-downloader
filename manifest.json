@@ -23,10 +23,15 @@
       ]
     }
   ],
+  "options_ui": {
+    "page": "src/options/index.html",
+    "open_in_tab": false
+  },
   "web_accessible_resources": [
-    "src/csn/get-link.js"
+    "src/csn-embedded/get-link.js"
   ],
   "permissions": [
+    "storage",
     "activeTab"
   ],
   "manifest_version": 2
