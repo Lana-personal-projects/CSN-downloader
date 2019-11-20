@@ -28,7 +28,7 @@
     "open_in_tab": false
   },
   "web_accessible_resources": [
-    "src/csn-embedded/get-link.js"
+    "src/csn-embedded.js"
   ],
   "permissions": [
     "storage",
