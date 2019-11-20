@@ -1,13 +1,13 @@
 {
   "name": "CSN downloader",
-  "description": "specific for beta",
+  "description": "Download music from CSN",
   "version": "1.0",
   "browser_action": {
     "default_icon": "icon.png"
   },
   "background": {
     "scripts": [
-      "back/background.js"
+      "src/background/background.js"
     ],
     "persistent": false
   },
@@ -19,12 +19,12 @@
       ],
       "run_at": "document_end",
       "js": [
-        "back/contentScript.js"
+        "src/background/content-script.js"
       ]
     }
   ],
   "web_accessible_resources": [
-    "csn/*.js"
+    "src/csn/get-link.js"
   ],
   "permissions": [
     "activeTab"

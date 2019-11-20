@@ -1,0 +1,25 @@
+{
+  "name": "csn-downloader",
+  "version": "1.0.0",
+  "description": "Download music from CSN",
+  "scripts": {
+    "dist": "gulp dist"
+  },
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Lana-personal-projects/CSN-downloader.git"
+  },
+  "author": "Lana",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Lana-personal-projects/CSN-downloader/issues"
+  },
+  "homepage": "https://github.com/Lana-personal-projects/CSN-downloader#readme",
+  "devDependencies": {
+    "@types/chrome": "0.0.91",
+    "@types/gulp": "^4.0.6",
+    "gulp": "^4.0.2",
+    "gulp-uglify-es": "^2.0.0"
+  }
+}

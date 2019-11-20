@@ -1,8 +1,8 @@
 let startupScript = document.createElement('script');
-startupScript.src = chrome.runtime.getURL('csn/getLink.js');
+startupScript.src = chrome.runtime.getURL('src/csn/get-link.js');
 document.body.appendChild(startupScript);
 
-//check csn/getLink.js
+//check csn/get-link.js
 document.addEventListener('gotLinkFromCSN', function (event) {
     const links = event.detail;
     chrome.runtime.sendMessage(links)
