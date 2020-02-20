@@ -8,8 +8,6 @@ function saveOptions() {
     chrome.storage.sync.set({
         qualities,
         fallbacks,
-    }, () => {
-        document.getElementById('status').textContent = 'Please restart browser for these changes to take effect';
     });
 }
 
@@ -21,5 +19,4 @@ function restoreOptions() {
 }
 
 document.addEventListener('DOMContentLoaded', restoreOptions);
-document.querySelectorAll('[name$=quality]')
-    .forEach(e => e.addEventListener('change', saveOptions));
+document.querySelectorAll('[name$=quality]').forEach(e => e.addEventListener('change', saveOptions));

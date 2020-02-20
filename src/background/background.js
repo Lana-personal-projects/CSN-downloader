@@ -23,6 +23,11 @@ chrome.storage.sync.get(['qualities', 'fallbacks'], async config => {
             title: `Download: ${download || fallbackDownload || 'None'}\nAvailable: ${available || 'None'}`,
         });
     });
+
+    chrome.storage.onChanged.addListener((changes) => {
+        if (changes.qualities) config.qualities = changes.qualities.newValue;
+        if (changes.fallbacks) config.fallbacks = changes.fallbacks.newValue;
+    });
 });
 
 chrome.tabs.onUpdated.addListener((tabId, changeInfo) => {
