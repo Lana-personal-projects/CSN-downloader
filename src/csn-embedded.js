@@ -3,7 +3,7 @@
 // put this into function to avoid conflict with page's js
 (async () => {
     const links = {};
-    const qualities = ['128', '320', 'flac', 'm4a'];
+    const qualities = ['128', '320', 'flac'];
     try {
         // player is page's js object that control the player
         for (const source of player.getConfig().sources) {
@@ -48,14 +48,6 @@
     }
 
     async function fixFlacLink(links) {
-        if (links.hasOwnProperty('m4a')) {
-            const flacLink = links['m4a'].replace(/(?<=[/.])m4a/g, 'flac');
-            if (await testLink(flacLink)) {
-                links['flac'] = flacLink;
-                return;
-            }
-        }
-
         for (const quality of ['320', '128']) {
             if (links.hasOwnProperty(quality)) {
                 const flacLink = links[quality]
@@ -67,7 +59,6 @@
                 }
             }
         }
-
     }
 
     // create a audio element to check if link ok
