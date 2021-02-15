@@ -8,7 +8,7 @@
         // player is page's js object that control the player
         for (const source of player.getConfig().sources) {
             for (const quality of qualities) {
-                if (source.file.match(regexFor(quality)))
+                if (source.file.match(regexForDownloadLink(quality)))
                     links [quality] = source.file;
             }
         }
@@ -43,8 +43,8 @@
         downloadNext(0);
     }
 
-    function regexFor(quality) {
-        return new RegExp(`\\/downloads\\/.+\\/${quality}\\/`, 'g');
+    function regexForDownloadLink(quality) {
+        return new RegExp(`\\/download.+\\/${quality}\\/`, 'g');
     }
 
     async function fixFlacLink(links) {
