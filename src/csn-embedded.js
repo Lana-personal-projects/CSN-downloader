@@ -12,9 +12,9 @@
                     links [quality] = source.file;
             }
         }
-        if (!links['flac']) {
-            await fixFlacLink(links);
-        }
+
+        await fixMp3Links(links);
+        await fixFlacLink(links);
     } catch (e) {
         // player is not defined, probably this is not a player page.
     }
@@ -48,7 +48,11 @@
     }
 
     async function fixFlacLink(links) {
-        for (const quality of ['320', '128']) {
+        if (links['flac']) {
+            return;
+        }
+        const replaceable = qualities.filter(quality => quality !== 'flac');
+        for (const quality of replaceable) {
             if (links.hasOwnProperty(quality)) {
                 const flacLink = links[quality]
                     .replace(new RegExp(`(?<=/)${quality}`, 'g'), 'flac')
@@ -57,6 +61,19 @@
                     links['flac'] = flacLink;
                     return;
                 }
+            }
+        }
+    }
+
+    async function fixMp3Links(links) {
+        const fixable = qualities.filter(quality => quality !== '128' || quality !== 'flac');
+        for (const quantity of fixable) {
+            if (links.hasOwnProperty(quantity)) {
+                continue;
+            }
+            const mp3Link = links['128'].replace(new RegExp('(?<=/)128', 'g'), quantity);
+            if (await testLink(mp3Link)) {
+                links[quantity] = mp3Link;
             }
         }
     }
