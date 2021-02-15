@@ -6,6 +6,10 @@
     const qualities = ['128', '320', 'flac'];
     try {
         // player is page's js object that control the player
+        if (!player) {
+            console.log('Player not found');
+            return;
+        }
         for (const source of player.getConfig().sources) {
             for (const quality of qualities) {
                 if (source.file.match(regexForDownloadLink(quality)))
@@ -16,7 +20,7 @@
         await fixMp3Links(links);
         await fixFlacLink(links);
     } catch (e) {
-        // player is not defined, probably this is not a player page.
+        console.log(e);
     }
 
     document.dispatchEvent(new CustomEvent('gotLinkFromCSN', { detail: links }));
@@ -66,6 +70,9 @@
     }
 
     async function fixMp3Links(links) {
+        if (!links['128']) {
+            return;
+        }
         const fixable = qualities.filter(quality => quality !== '128' || quality !== 'flac');
         for (const quantity of fixable) {
             if (links.hasOwnProperty(quantity)) {
@@ -94,7 +101,7 @@
                 audio.load();
             });
 
-            console.log(`found hidden link: ${link}`);
+            console.log(`Found hidden link: ${link}`);
             return true;
         } catch (e) {
             return false;
