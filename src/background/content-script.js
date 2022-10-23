@@ -1,6 +1,8 @@
+import csnEmbedded from 'url:../csn-embedded.js';
+
 //inject script into page
 const startupScript = document.createElement('script');
-startupScript.src = chrome.runtime.getURL('src/csn-embedded.js');
+startupScript.src = csnEmbedded;
 startupScript.defer = true;
 document.body.appendChild(startupScript);
 

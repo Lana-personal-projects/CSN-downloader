@@ -1,7 +1,7 @@
 {
   "name": "CSN downloader",
   "description": "Download music from CSN",
-  "version": "2.0",
+  "version": "2.1.0",
   "action": {
     "default_icon": "icon.png"
   },
@@ -24,17 +24,6 @@
     "page": "src/options/index.html",
     "open_in_tab": false
   },
-  "web_accessible_resources": [
-    {
-      "resources": [
-        "src/csn-embedded.js"
-      ],
-      "matches": [
-        "http://*.chiasenhac.vn/*",
-        "https://*.chiasenhac.vn/*"
-      ]
-    }
-  ],
   "permissions": [
     "storage",
     "activeTab"

@@ -1,9 +1,10 @@
 {
   "name": "csn-downloader",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Download music from CSN",
   "scripts": {
-    "dist": "gulp dist"
+    "prebuild": "rimraf dist",
+    "build": "parcel build manifest.json"
   },
   "private": true,
   "repository": {
@@ -17,10 +18,10 @@
   },
   "homepage": "https://github.com/lana-toolbox/csn-downloader-chrome-extension#readme",
   "devDependencies": {
+    "@parcel/config-webextension": "^2.7.0",
     "@types/chrome": "0.0.199",
-    "@types/gulp": "^4.0.6",
-    "gulp": "^4.0.2",
-    "gulp-uglify-es": "^3.0.0"
+    "parcel": "^2.7.0",
+    "rimraf": "^3.0.2"
   },
   "volta": {
     "node": "16.18.0"
