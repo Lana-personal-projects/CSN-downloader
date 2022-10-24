@@ -26,9 +26,7 @@
   }
 
   function matchQuality(quality, link) {
-    const storages = ["down2", "download", "downloads"];
-    const regexes = storages.map(storage => new RegExp(`\\/${storage}.+\\/${quality}\\/`, "g"));
-    return regexes.some(reg => link.match(reg));
+    return link.match(new RegExp(`.*chiasenhac\\.com\\/.+\\/${quality}\\/`, "g"));
   }
 
   async function tryFindNonMp3HiddenLink(links, types = ["flac"]) {
@@ -61,7 +59,10 @@
     if (!links["128"]) {
       return;
     }
-    const fixable = qualities.filter(quality => !Number.isNaN(Number.parseInt(quality)));
+
+    const fixable = qualities.filter(quality => !Number.isNaN(Number.parseInt(quality)))
+      .filter(q => q > 128);
+
     for (const quantity of fixable) {
       if (links.hasOwnProperty(quantity)) {
         continue;
