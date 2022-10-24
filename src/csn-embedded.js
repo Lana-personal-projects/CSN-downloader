@@ -101,18 +101,27 @@
   function downloadFiles(downloadQualities) {
     function downloadNext(i) {
       if (i >= downloadQualities.length) return;
+      const link = links[downloadQualities[i]];
+      const name = decodeURIComponent(getLastPathSegment(link));
 
       const a = document.createElement("A");
-      a.href = links[downloadQualities[i]];
-      a.target = "_blank";
+      a.href = link;
+      a.setAttribute("download", name);
+
+      a.target = "_parent";
       a.style.display = "none";
-      a.setAttribute("download", "true");
       document.body.appendChild(a);
       a.click();
-      setTimeout(() => downloadNext(i + 1), 1000);
       document.body.removeChild(a);
+
+      setTimeout(() => downloadNext(i + 1), 1000);
     }
 
     downloadNext(0);
   }
 })();
+
+function getLastPathSegment(link) {
+  const segments = new URL(link).pathname.split("/");
+  return segments.pop() || segments.pop();  // Handle potential trailing slash
+}
