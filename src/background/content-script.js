@@ -1,15 +1,26 @@
-import csnEmbedded from 'url:../csn-embedded.js';
+import csnEmbedded from "url:../csn-embedded.js";
 
-//inject script into page
-const startupScript = document.createElement('script');
+// inject script into page
+const startupScript = document.createElement("script");
 startupScript.src = csnEmbedded;
 startupScript.defer = true;
 document.body.appendChild(startupScript);
 
-document.addEventListener('gotLinkFromCSN', (event) => {
-    chrome.runtime.sendMessage(event.detail).catch(e => console.error(e));
+// setup event to injected script forwarding
+chrome.runtime.onMessage.addListener(event => {
+  document.dispatchEvent(new CustomEvent(event.type, event));
 });
 
-chrome.runtime.onMessage.addListener(config => {
-    document.dispatchEvent(new CustomEvent('startDownload', { detail: config }));
-});
+forwardEvent(["gotLinkFromCSN", "testLinkCSN"]);
+
+function forwardEvent(types) {
+  types.forEach(type => {
+    document.addEventListener(type, (event) => {
+      chrome.runtime.sendMessage({ type: event.type, detail: event.detail }, (response) => {
+        if (response?.forward === false) return;
+        const type = response?.type || type;
+        document.dispatchEvent(new CustomEvent(type, { ...response, type }));
+      });
+    });
+  });
+}

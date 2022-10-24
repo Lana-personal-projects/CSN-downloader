@@ -1,6 +1,6 @@
 {
   "name": "csn-downloader",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "Download music from CSN",
   "scripts": {
     "prebuild": "rimraf dist",

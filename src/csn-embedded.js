@@ -11,8 +11,8 @@
 
   const qualities = ["128", "320", "flac"];
   const links = findPublicLinks();
-  await tryFindHiddenLinks(links).catch(e => console.error("Error hidden flac hidden links", e));
-  await tryFindFlacHiddenLink(links).catch(e => console.error("Error find flac hidden links", e));
+  await tryFindMp3HiddenLinks(links).catch(e => console.error("Error hidden flac hidden links", e));
+  await tryFindNonMp3HiddenLink(links).catch(e => console.error("Error find flac hidden links", e));
 
   function findPublicLinks() {
     const links = {};
@@ -31,29 +31,37 @@
     return regexes.some(reg => link.match(reg));
   }
 
-  async function tryFindFlacHiddenLink(links) {
-    if (links["flac"]) {
-      return;
-    }
-    const replaceable = qualities.filter(quality => quality !== "flac");
-    for (const quality of replaceable) {
-      if (links.hasOwnProperty(quality)) {
-        const flacLink = links[quality]
-          .replace(new RegExp(`(?<=/)${quality}`, "g"), "flac")
-          .replace(/(?<=\.)mp3/g, "flac");
-        if (await testLink(flacLink)) {
-          links["flac"] = flacLink;
-          return;
+  async function tryFindNonMp3HiddenLink(links, types = ["flac"]) {
+    for (let type of types) {
+      if (links[type]) {
+        return;
+      }
+
+      const replaceable = qualities.filter(quality => !Number.isNaN(Number.parseInt(quality)));
+      const checkedLinks = [];
+      for (const quality of replaceable) {
+        if (links.hasOwnProperty(quality)) {
+          const link = links[quality]
+            .replace(new RegExp(`(?<=/)${quality}`, "g"), type)
+            .replace(/(?<=\.)mp3/g, type);
+
+          if (checkedLinks.includes(link)) continue;
+          checkedLinks.push(link);
+
+          if (await testLink(link)) {
+            links[type] = link;
+            return;
+          }
         }
       }
     }
   }
 
-  async function tryFindHiddenLinks(links) {
+  async function tryFindMp3HiddenLinks(links) {
     if (!links["128"]) {
       return;
     }
-    const fixable = qualities.filter(quality => quality !== "128" || quality !== "flac");
+    const fixable = qualities.filter(quality => !Number.isNaN(Number.parseInt(quality)));
     for (const quantity of fixable) {
       if (links.hasOwnProperty(quantity)) {
         continue;
@@ -65,27 +73,20 @@
     }
   }
 
-  // create an audio element to check if link ok
+  // using background script to check available
   // by this way we can bypass the cors
-  async function testLink(link) {
-    const audio = document.createElement("AUDIO");
-    try {
-      await new Promise((resolve, reject) => {
-        audio.addEventListener("loadedmetadata", () => {
-          resolve();
-        });
-        audio.addEventListener("error", () => {
-          reject();
-        });
-        audio.src = link;
-        audio.load();
-      });
-
-      console.log(`Found hidden link: ${link}`);
-      return true;
-    } catch (e) {
-      return false;
-    }
+  function testLink(link) {
+    return new Promise(resolve => {
+      const listener = (event) => {
+        if (event.detail.link === link) {
+          document.removeEventListener("testLinkCSNResult", listener);
+          console.log(`[${event.detail.result ? "200" : "404"}] hidden link: ${link}`);
+          return resolve(event.detail.result);
+        }
+      };
+      document.addEventListener("testLinkCSNResult", listener);
+      document.dispatchEvent(new CustomEvent("testLinkCSN", { detail: link }));
+    });
   }
 
   console.log(links);
